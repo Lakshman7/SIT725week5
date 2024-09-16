@@ -1,0 +1,17 @@
+<nav class="nav-wrapper">
+    <a href="#" class="brand-logo">Sports Central</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#match-reviews">Match Reviews</a></li>
+      <li><a href="#latest-news">Latest News</a></li>
+      <li><a href="#player-stats">Player Stats</a></li>
+      <li><a href="#live-scores">Live Scores</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <% if (user) { %>
+        <li><a href="/auth/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/auth/login">Login</a></li>
+        <li><a href="/auth/register">Register</a></li>
+      <% } %>
+    </ul>
+</nav>
