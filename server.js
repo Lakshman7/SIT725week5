@@ -1,12 +1,17 @@
-const express = require('express');
-const path = require('path');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes');
-const contactRoutes = require('./routes/contactRoutes');
-const newsRoutes = require('./routes/newsRoutes');
-const userRoutes = require('./routes/userRoutes');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import mongoose from 'mongoose';
+import authRoutes from './routes/authRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
+import newsRoutes from './routes/newsRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+
+// Set up __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -68,6 +73,19 @@ app.post('/api/contact', async (req, res) => {
     console.error('Error storing data:', error);
     res.status(500).send('Error storing data');
   }
+});
+
+// Route to add two numbers (with missing parameter handling)
+app.get('/addTwoNumbers/:firstNumber/:secondNumber?', (req, res) => {
+  const firstNumber = parseInt(req.params.firstNumber);
+  const secondNumber = req.params.secondNumber ? parseInt(req.params.secondNumber) : null;
+
+  if (isNaN(firstNumber) || secondNumber === null || isNaN(secondNumber)) {
+    return res.status(400).json({ result: null, statusCode: 400 });
+  }
+
+  const result = firstNumber + secondNumber;
+  res.status(200).json({ result: result, statusCode: 200 });
 });
 
 // Start the server

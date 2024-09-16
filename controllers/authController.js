@@ -1,15 +1,15 @@
-const bcrypt = require('bcrypt');
-const User = require('../models/userModel');
+import bcrypt from 'bcrypt';
+import User from '../models/userModel.js';
 
-exports.loginPage = (req, res) => {
+export const loginPage = (req, res) => {
   res.render('login', { user: req.session.user });
 };
 
-exports.registerPage = (req, res) => {
+export const registerPage = (req, res) => {
   res.render('register', { user: req.session.user });
 };
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -22,7 +22,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.logout = (req, res) => {
+export const logout = (req, res) => {
   req.session.destroy(err => {
     if (err) return res.status(500).send('Error logging out');
     res.redirect('/');
